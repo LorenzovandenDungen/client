@@ -1,29 +1,44 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const Users = () => {
+function Users() {
     const [users, setUsers] = useState([]);
 
-    // Fetch the users from your API when the component mounts
-    useEffect(()
-        // Your API fetching logic goes here, for now let's use a placeholder
-        fetch('/api/users')
-            .then(response => response.json())
-            .then(data => setUsers(data))
-            .catch(error => console.error(error));
-    }, []); // The empty array ensures this effect only runs once, when the component mounts
-
-    // More functionality would go here, like creating users, sending invites, and modifying user roles
+    useEffect(() => {
+        axios.get('http://localhost:5000/api/users')
+            .then(res => {
+                setUsers(res.data);
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    }, []);
 
     return (
         <div>
             <h2>Users</h2>
-            <ul>
-                {users.map(user => (
-                    <li key={user.id}>{user.name}</li>
-                ))}
-            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {users.map(user => (
+                        <tr key={user.id}>
+                            <td>{user.id}</td>
+                            <td>{user.name}</td>
+                            <td>{user.email}</td>
+                            <td>{user.role}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
-};
+}
 
 export default Users;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 // Import your components here
 import AdminLogin from './components/Admin/AdminLogin';
@@ -18,23 +18,23 @@ import Config from './components/Company/Config';
 function App() {
   return (
     <Router>
-      <Switch>
-        <Route path="/admin/login" component={AdminLogin} />
-        <Route path="/admin/users" component={Users} />
-        <Route path="/admin/invites" component={Invites} />
-        <Route path="/admin/trainings" component={Trainings} />
+      <Routes>
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/users" element={<Users />} />
+        <Route path="/admin/invites" element={<Invites />} />
+        <Route path="/admin/trainings" element={<Trainings />} />
 
-        <Route path="/employee/login" component={EmployeeLogin} />
-        <Route path="/employee/trainings" component={AvailableTrainings} />
-        <Route path="/employee/grades" component={MyGrades} />
+        <Route path="/employee/login" element={<EmployeeLogin />} />
+        <Route path="/employee/trainings" element={<AvailableTrainings />} />
+        <Route path="/employee/grades" element={<MyGrades />} />
 
-        <Route path="/company/login" component={ManagerLogin} />
-        <Route path="/company/grades" component={CompanyGrades} />
-        <Route path="/company/config" component={Config} />
+        <Route path="/company/login" element={<ManagerLogin />} />
+        <Route path="/company/grades" element={<CompanyGrades />} />
+        <Route path="/company/config" element={<Config />} />
 
         {/* You can add a default route that redirects users to a desired page */}
-        <Route path="*" component={EmployeeLogin} />
-      </Switch>
+        <Route path="*" element={<EmployeeLogin />} />
+      </Routes>
     </Router>
   );
 }
