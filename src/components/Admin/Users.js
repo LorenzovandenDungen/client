@@ -19,7 +19,7 @@ const Users = () => {
 
   const addUser = async () => {
     // Replace with your own URL
-    const response = await axios.post("http://localhost:5000/api/users", {
+    await axios.post("http://localhost:5000/api/users", {
       name,
       email
     });
