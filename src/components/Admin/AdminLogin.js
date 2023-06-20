@@ -1,28 +1,38 @@
-// AdminLogin.js
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
 
-const AdminLogin = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+function AdminLogin() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const res = await axios.post('/api/login', { email, password });
-            // Handle response (store user info, redirect, show error, etc.)
-        } catch (err) {
-            // Handle error
-        }
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Here you should send request to backend to authenticate admin
+    console.log(`Admin is trying to log in with username: ${username} and password: ${password}`);
+  };
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-            <button type="submit">Log In</button>
-        </form>
-    );
-};
+  const formStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '200px',
+    margin: 'auto'
+  };
+
+  const inputStyle = {
+    marginBottom: '10px',
+    padding: '5px'
+  };
+
+  const buttonStyle = {
+    padding: '5px'
+  };
+
+  return (
+    <form onSubmit={handleSubmit} style={formStyle}>
+      <input style={inputStyle} type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username"/>
+      <input style={inputStyle} type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password"/>
+      <button style={buttonStyle} type="submit">Login</button>
+    </form>
+  );
+}
 
 export default AdminLogin;
