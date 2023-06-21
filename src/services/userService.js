@@ -1,36 +1,17 @@
-// userService.js
-const API_URL = 'http://localhost:5000/api/users';
+import axios from 'axios';
+
+const baseUrl = 'http://localhost:5000/api/users';  // adjust if your server runs on a different port
 
 const userService = {
-  getAll: async () => {
-    const response = await fetch(API_URL);
-    return await response.json();
+  register: async (name, email, password, role) => {
+    const response = await axios.post(`${baseUrl}/register`, { name, email, password, role });
+    return response.data;
   },
-
-  create: async (user) => {
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(user)
-    });
-    return await response.json();
+  
+  login: async (email, password) => {
+    const response = await axios.post(`${baseUrl}/login`, { email, password });
+    return response.data;
   },
-
-  update: async (id, user) => {
-    const response = await fetch(`${API_URL}/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(user)
-    });
-    return await response.json();
-  },
-
-  remove: async (id) => {
-    const response = await fetch(`${API_URL}/${id}`, {
-      method: 'DELETE'
-    });
-    return await response.json();
-  }
 };
 
 export default userService;

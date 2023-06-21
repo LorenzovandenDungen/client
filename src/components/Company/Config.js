@@ -1,21 +1,52 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from 'react';
 
 const Config = () => {
-  const [config, setConfig] = useState({});
+  const [sendEmail, setSendEmail] = useState(false);
 
-  useEffect(() => {
-    axios.get("/api/config").then((res) => {
-      setConfig(res.data);
-    });
-  }, []);
+  const handleCheckboxChange = () => {
+    setSendEmail(!sendEmail);
+  };
 
   return (
-    <div>
-      <h1>Config</h1>
-      <pre>{JSON.stringify(config, null, 2)}</pre>
+    <div style={styles.container}>
+      <h2 style={styles.heading}>Configuration</h2>
+      <div style={styles.checkboxContainer}>
+        <label style={styles.label}>
+          <input
+            type="checkbox"
+            checked={sendEmail}
+            onChange={handleCheckboxChange}
+            style={styles.checkbox}
+          />
+          Automatically send email for low scores
+        </label>
+      </div>
     </div>
   );
-};  
+};
+
+const styles = {
+  container: {
+    padding: '20px',
+    border: '1px solid #ccc',
+    borderRadius: '8px',
+    maxWidth: '400px',
+    margin: '0 auto',
+  },
+  heading: {
+    marginBottom: '20px',
+  },
+  checkboxContainer: {
+    marginTop: '10px',
+  },
+  label: {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: '10px',
+  },
+  checkbox: {
+    marginRight: '5px',
+  },
+};
 
 export default Config;
