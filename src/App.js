@@ -1,3 +1,4 @@
+// App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AdminLogin from './components/Admin/AdminLogin';
@@ -10,11 +11,15 @@ import MyGrades from './components/Employee/MyGrades';
 import ManagerLogin from './components/Company/ManagerLogin';
 import CompanyGrades from './components/Company/MyGrades';
 import Config from './components/Company/Config';
+import Homepage from './components/Homepage';
 
 function App() {
   return (
     <Router>
       <Routes>
+        {/* Homepage Route */}
+        <Route path="/" element={<Homepage />} />
+
         {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/users" element={<Users />} />
