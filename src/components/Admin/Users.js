@@ -5,30 +5,39 @@ const Users = () => {
   const [users, setUsers] = useState([]);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("Employee"); // Default role is set to "Employee"
 
   useEffect(() => {
-    // Fetch users from server when component mounts
     fetchUsers();
   }, []);
 
   const fetchUsers = async () => {
-    // Replace with your own URL
     const response = await axios.get("http://localhost:5000/api/users");
     setUsers(response.data);
   };
 
   const addUser = async () => {
-    // Replace with your own URL
     await axios.post("http://localhost:5000/api/users", {
       name,
-      email
+      email,
+      role,
     });
     fetchUsers();
+    // Reset input fields after adding a user
+    setName("");
+    setEmail("");
+    setRole("Employee");
   };
 
   const deleteUser = async (id) => {
-    // Replace with your own URL
     await axios.delete(`http://localhost:5000/api/users/${id}`);
+    fetchUsers();
+  };
+
+  const updateRole = async (id, newRole) => {
+    await axios.put(`http://localhost:5000/api/users/${id}`, {
+      role: newRole,
+    });
     fetchUsers();
   };
 
@@ -36,14 +45,37 @@ const Users = () => {
     <div>
       <h2>Users</h2>
       <form onSubmit={addUser}>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <option value="Admin">Admin</option>
+          <option value="Employee">Employee</option>
+          <option value="Company">Company</option>
+        </select>
         <button type="submit">Add User</button>
       </form>
-      {users.map(user => (
+      {users.map((user) => (
         <div key={user.id}>
-          <p>{user.name} ({user.email})</p>
+          <p>
+            {user.name} ({user.email}) - Role: {user.role}
+          </p>
           <button onClick={() => deleteUser(user.id)}>Delete</button>
+          <select
+            value={user.role}
+            onChange={(e) => updateRole(user.id, e.target.value)}
+          >
+            <option value="Admin">Admin</option>
+            <option value="Employee">Employee</option>
+            <option value="Company">Company</option>
+          </select>
         </div>
       ))}
     </div>
